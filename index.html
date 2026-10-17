@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IGCSE ICT - Chapter 8 Safety & Security Flashcards (50 Cards)</title>
+    <style>
+        :root {
+            --bg-main: #090d16;
+            --bg-card: #131d31;
+            --border-color: #223354;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        header h1 {
+            color: var(--accent);
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .flashcard-status {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .category-pill {
+            background-color: #0c4a6e;
+            color: #7dd3fc;
+            padding: 0.35rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid #0284c7;
+        }
+
+        /* Flashcard Container with 3D Flip */
+        .flashcard-container {
+            width: 100%;
+            height: 280px;
+            perspective: 1000px;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            border-radius: 1.25rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1.25rem;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2.5rem;
+            text-align: center;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background-color: #172554;
+            border-color: #1d4ed8;
+            color: #eff6ff;
+        }
+
+        .card-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .card-back .card-title {
+            color: #93c5fd;
+        }
+
+        .card-content {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .flip-hint {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 1rem;
+        }
+
+        .btn {
+            background-color: #1e293b;
+            color: var(--text-main);
+            font-weight: 600;
+            padding: 0.85rem 1.5rem;
+            border-radius: 0.85rem;
+            border: 1px solid #334155;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            flex: 1;
+        }
+
+        .btn:hover:not(:disabled) {
+            background-color: #283548;
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #0f172a;
+            font-weight: 700;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>IGCSE ICT Flashcard Revision</h1>
+        <p>Chapter 8: Safety and Security (50 Comprehensive Flashcards)</p>
+    </header>
+
+    <main>
+        <div class="flashcard-status">
+            <span id="card-counter">Card 1 of 50</span>
+            <span id="category-display" class="category-pill">Physical Safety</span>
+        </div>
+
+        <!-- Flashcard UI -->
+        <div class="flashcard-container" onclick="flipCard()">
+            <div id="flashcard" class="flashcard">
+                <div class="card-face card-front">
+                    <span class="card-title">Question / Term</span>
+                    <div id="front-text" class="card-content">Loading card...</div>
+                    <span class="flip-hint">(Click card or press Space to flip)</span>
+                </div>
+                <div class="card-face card-back">
+                    <span class="card-title">Answer / Explanation</span>
+                    <div id="back-text" class="card-content">Loading answer...</div>
+                    <span class="flip-hint">(Click card or press Space to flip)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button id="prev-btn" class="btn" onclick="prevCard()">Previous</button>
+            <button class="btn" onclick="shuffleCards()">Shuffle Cards</button>
+            <button id="next-btn" class="btn btn-primary" onclick="nextCard()">Next Card</button>
+        </div>
+    </main>
+
+    <footer>
+        IGCSE ICT Revision &bull; Chapter 8 Safety & Security
+    </footer>
+
+    <script>
+        const flashcards = [
+            // 8.1 Physical Safety
+            {
+                category: "Physical Safety",
+                front: "What is the primary danger of trailing electrical cables across office floors?",
+                back: "Trip hazards leading to falls, physical injury, and potential equipment damage if pulled."
+            },
+            {
+                category: "Physical Safety",
+                front: "How can trailing cable trip hazards be prevented in a computer lab?",
+                back: "Using cable trunking, running cables under floor channels, or securing them neatly along walls and desks."
+            },
+            {
+                category: "Physical Safety",
+                front: "What is the main danger of overloading electrical sockets with multi-plug adapters?",
+                back: "Risk of electrical fires caused by overheating wires and excessive current draw."
+            },
+            {
+                category: "Physical Safety",
+                front: "Why is using damaged power cables with exposed bare copper wires dangerous?",
+                back: "Risk of severe electric shock, electrocution, and electrical short circuits leading to fires."
+            },
+            {
+                category: "Physical Safety",
+                front: "What is the risk of placing heavy hardware (e.g., laser printers) on desk edges?",
+                back: "Equipment could fall off, causing physical injury to people below and expensive equipment damage."
+            },
+            {
+                category: "Physical Safety",
+                front: "Why is proper ventilation around computer servers important?",
+                back: "To prevent overheating, which causes hardware component failure, system crashes, or electrical fires."
+            },
+            {
+                category: "Physical Safety",
+                front: "What is the danger of spilling liquids near electrical computer equipment?",
+                back: "Risk of short circuits, permanent damage to electronic components, and electric shock."
+            },
+            {
+                category: "Physical Safety",
+                front: "How should liquid spills near computers be handled safely?",
+                back: "Immediately disconnect power at the mains socket (if safe), turn off equipment, and keep liquids away."
+            },
+            {
+                category: "Physical Safety",
+                front: "Who should carry out electrical maintenance on computer equipment?",
+                back: "Only qualified electricians or trained technicians due to high-voltage hazards."
+            },
+            {
+                category: "Physical Safety",
+                front: "Why is adequate workspace spacing important around computer desks?",
+                back: "To allow safe evacuation during emergency fire drills and prevent physical collisions."
+            },
+            {
+                category: "Physical Safety",
+                front: "What type of fire extinguisher must be used in a server room?",
+                back: "CO2 or dry powder extinguishers (never water, because water conducts electricity)."
+            },
+            {
+                category: "Physical Safety",
+                front: "Why must water-based fire extinguishers NEVER be used on electrical fires?",
+                back: "Water conducts electricity, creating an extreme electrocution hazard for the user."
+            },
+            {
+                category: "Physical Safety",
+                front: "What is the danger of blocking emergency fire exits with equipment boxes?",
+                back: "It traps occupants during fire emergencies, preventing safe evacuation and violating safety laws."
+            },
+
+            // 8.2 E-Safety & Data Protection
+            {
+                category: "E-Safety & Data Protection",
+                front: "What is 'Personal Data'?",
+                back: "Any data relating to a living, identifiable individual (e.g., name, address, date of birth, phone number)."
+            },
+            {
+                category: "E-Safety & Data Protection",
+                front: "What is 'Sensitive Personal Data' (Special Category Data)?",
+                back: "Private information requiring extra legal protection, such as medical history, religious beliefs, and ethnic origin."
+            },
+            {
+                category: "E-Safety & Data Protection",
+                front: "What is the primary purpose of Data Protection Acts?",
+                back: "To protect individuals' personal data from being misused, stolen, or mishandled by organizations."
+            },
+            {
+                category: "E-Safety & Data Protection",
+                front: "Who is a 'Data Controller'?",
+                back: "The person or organization who determines the purposes and manner in which personal data is processed."
+            },
+            {
+                category: "E-Safety & Data Protection",
+                front: "Who is a 'Data Subject'?",
+                back: "The living individual whose personal data is being collected, held, or processed."
+            },
+            {
+                category: "E-Safety & Data Protection",
+                front: "What key rights do data subjects have under Data Protection Acts?",
+                back: "Right to access their data (Subject Access Request), correct errors, and request erasure."
+            },
+            {
+                category: "E-Safety & Data Protection",
+                front: "What is 'E-Safety' (Electronic Safety)?",
+                back: "The safe and responsible use of IT and electronic communications (internet, social media) especially for youth."
+            },
+            {
+                category: "E-Safety & Data Protection",
+                front: "What is 'Phishing'?",
+                back: "Fraudulent attempts by cybercriminals to steal credentials by disguising as a trusted entity in emails/messages."
+            },
+            {
+                category: "E-Safety & Data Protection",
+                front: "What is 'Smishing' and 'Vishing'?",
+                back: "Phishing conducted via SMS text messages (smishing) and voice phone calls (vishing)."
+            },
+            {
+                category: "E-Safety & Data Protection",
+                front: "What is 'Identity Theft' online?",
+                back: "When criminals steal someone's personal data to impersonate them for financial fraud or crimes."
+            },
+            {
+                category: "E-Safety & Data Protection",
+                front: "What is 'Cyberbullying'?",
+                back: "Bullying or harassment of a person using digital technologies like social media or messaging apps."
+            },
+            {
+                category: "E-Safety & Data Protection",
+                front: "What precautions should users take on social media?",
+                back: "Set privacy profiles to private, avoid sharing personal details, and be cautious with unknown requests."
+            },
+            {
+                category: "E-Safety & Data Protection",
+                front: "What are 'Cookies' on websites?",
+                back: "Small text files stored on user computers by websites to remember preferences and sessions."
+            },
+            {
+                category: "E-Safety & Data Protection",
+                front: "What is 'Plagiarism' in digital media?",
+                back: "Passing off someone else's work or ideas as your own without proper attribution."
+            },
+            {
+                category: "E-Safety & Data Protection",
+                front: "What is 'Copyright Infringement'?",
+                back: "Using copyrighted digital media (images, music, software) without legal permission from the owner."
+            },
+            {
+                category: "E-Safety & Data Protection",
+                front: "What is 'Open Source Software'?",
+                back: "Software whose source code is freely available for anyone to view, modify, and distribute (e.g., Linux)."
+            },
+            {
+                category: "E-Safety & Data Protection",
+                front: "What is 'Proprietary Software'?",
+                back: "Software whose source code is restricted and owned by a company requiring paid licenses (e.g., Windows)."
+            },
+
+            // 8.3 Security of Data & Data Threats
+            {
+                category: "Security of Data & Threats",
+                front: "What is a 'Computer Virus'?",
+                back: "Malicious software code that attaches to host files, replicating itself to corrupt or delete data."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is a 'Computer Worm'?",
+                back: "A standalone malicious program that replicates and travels across networks without needing host files."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is 'Trojan Horse' malware?",
+                back: "Malware disguised as legitimate software that tricks users into installing it while carrying out hidden harm."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is 'Spyware'?",
+                back: "Malware that covertly monitors user activity (keystrokes, passwords) and transmits data to third parties."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is 'Adware'?",
+                back: "Software that automatically displays unwanted popup ads on user screens and tracks browsing habits."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is 'Ransomware'?",
+                back: "Malware that encrypts files or locks systems, demanding financial ransom for the decryption key."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is a 'Brute-Force Attack'?",
+                back: "A trial-and-error method where software systematically guesses all password combinations."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is a 'DoS / DDoS Attack'?",
+                back: "Flooding a target server with massive fake traffic to crash it and block legitimate users."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is a 'Man-in-the-Middle (MitM)' attack?",
+                back: "Secretly intercepting and relaying communications between two parties believing they communicate directly."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is 'SQL Injection (SQLi)'?",
+                back: "Inserting malicious SQL query code into input fields to manipulate backend databases and steal data."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is a 'Zero-Day Vulnerability'?",
+                back: "A software security flaw unknown to developers exploited by hackers before a patch is released."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is 'Shoulder Surfing'?",
+                back: "Directly observing someone over their shoulder as they type passwords or PINs."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is 'Blagging' (Pretexting)?",
+                back: "Using fabricated scenarios or false identities to persuade victims into revealing confidential data."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is 'Wardriving'?",
+                back: "Searching for vulnerable wireless Wi-Fi networks by driving around with a laptop or antenna."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is 'Accidental Data Loss'?",
+                back: "Unintentional file deletion, disk formatting, or liquid spills caused by human error."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is 'Data Encryption'?",
+                back: "Scrambling plaintext into unreadable ciphertext using an algorithm and key so intercepted data is unreadable."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is a 'Firewall'?",
+                back: "Hardware or software that filters network traffic based on rules to block unauthorized access."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is 'Two-Factor Authentication (2FA)'?",
+                back: "Requiring two distinct verification factors (password + SMS code) to gain account access."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is the difference between Full, Incremental, and Differential backups?",
+                back: "Full backs up all data; incremental backs up changes since last backup; differential backs up changes since last full backup."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "Why must backups be stored offsite or offline?",
+                back: "To ensure backups survive localized disasters (fires, floods) affecting the main building."
+            },
+            {
+                category: "Security of Data & Threats",
+                front: "What is 'Air-Gapping'?",
+                back: "Physically isolating a network or backup server from the internet to protect against remote cyberattacks."
+            }
+        ];
+
+        let currentIndex = 0;
+        let isFlipped = false;
+
+        const flashcardEl = document.getElementById("flashcard");
+        const frontTextEl = document.getElementById("front-text");
+        const backTextEl = document.getElementById("back-text");
+        const cardCounterEl = document.getElementById("card-counter");
+        const categoryDisplayEl = document.getElementById("category-display");
+        const prevBtn = document.getElementById("prev-btn");
+        const nextBtn = document.getElementById("next-btn");
+
+        function updateCard() {
+            isFlipped = false;
+            flashcardEl.classList.remove("flipped");
+            
+            const card = flashcards[currentIndex];
+            frontTextEl.textContent = card.front;
+            backTextEl.textContent = card.back;
+            categoryDisplayEl.textContent = card.category;
+            cardCounterEl.textContent = `Card ${currentIndex + 1} of ${flashcards.length}`;
+
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === flashcards.length - 1;
+            nextBtn.textContent = currentIndex === flashcards.length - 1 ? "Finish" : "Next Card";
+        }
+
+        function flipCard() {
+            isFlipped = !isFlipped;
+            flashcardEl.classList.toggle("flipped", isFlipped);
+        }
+
+        function nextCard() {
+            if (currentIndex < flashcards.length - 1) {
+                currentIndex++;
+                updateCard();
+            } else {
+                alert("Congratulations! You have reviewed all 50 flashcards for Chapter 8.");
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCard();
+            }
+        }
+
+        function shuffleCards() {
+            for (let i = flashcards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+            }
+            currentIndex = 0;
+            updateCard();
+        }
+
+        // Keyboard navigation (Space to flip, Arrow keys to navigate)
+        document.addEventListener("keydown", (e) => {
+            if (e.code === "Space") {
+                e.preventDefault();
+                flipCard();
+            } else if (e.code === "ArrowRight") {
+                nextCard();
+            } else if (e.code === "ArrowLeft") {
+                prevCard();
+            }
+        });
+
+        // Initialize on load
+        updateCard();
+    </script>
+</body>
+</html>
